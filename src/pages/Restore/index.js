@@ -101,8 +101,8 @@ const Restore = () => {
 
   const renderMainBody = () => {
     if (
-      originalImage.apiStatusConstants === apiStatusConstants.success &&
-      restoredImage.apiStatusConstants === apiStatusConstants.success
+      originalImage.apiStatus === apiStatusConstants.success &&
+      restoredImage.apiStatus === apiStatusConstants.success
     ) {
       return (
         <div className="is-flex is-flex-direction-column is-align-items-center">
@@ -135,9 +135,7 @@ const Restore = () => {
           {renderImageComparision()}
         </div>
       );
-    } else if (
-      originalImage.apiStatusConstants === apiStatusConstants.success
-    ) {
+    } else if (originalImage.apiStatus === apiStatusConstants.success) {
       return (
         <div className="is-flex is-flex-direction-column is-align-items-center">
           <div className="columns is-variable is-4">
