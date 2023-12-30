@@ -135,7 +135,10 @@ const Restore = () => {
           {renderImageComparision()}
         </div>
       );
-    } else if (originalImage.apiStatus === apiStatusConstants.success) {
+    } else if (
+      originalImage.apiStatus === apiStatusConstants.success &&
+      restoredImage.apiStatus !== apiStatusConstants.success
+    ) {
       return (
         <div className="is-flex is-flex-direction-column is-align-items-center">
           <div className="columns is-variable is-4">
@@ -185,7 +188,11 @@ const Restore = () => {
                   transformationPreset: "thumbnail",
                 },
               });
-              setOriginalImage(imageUrl);
+              setOriginalImage({
+                apiStatus: apiStatusConstants.success,
+                url: imageUrl,
+                error: null,
+              });
               generatePhoto(imageUrl);
             }
           }}
@@ -195,6 +202,7 @@ const Restore = () => {
       );
     }
   };
+
   return (
     <div className="bg-container is-flex is-flex-direction-column is-align-items-center">
       <Header />
