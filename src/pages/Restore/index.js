@@ -25,12 +25,11 @@ const Restore = () => {
 
   const generatePhoto = async (oldPicUrl) => {
     setRestoredImage({ apiStatus: apiStatusConstants.inProgress, url: null });
-    const apiUrl = "xyz/api";
+    const apiUrl = `${process.env.REACT_APP_BASE_URL}/restore`;
     const options = {
-      // headers: {
-      //   Authorization: `Bearer ${jwtToken}`,
-      // },
       method: "GET",
+      body: JSON.stringify({ imgUrl: oldPicUrl }),
+      credentials: "include",
     };
     const res = await fetch(apiUrl, options);
     if (res.ok) {
@@ -50,17 +49,13 @@ const Restore = () => {
         <ReactCompareSlider
           itemOne={
             <ReactCompareSliderImage
-              src={
-                "https://upcdn.io/12a1xvS/thumbnail/uploads/2023/12/30/4kvZtyeY8o-WhatsApp%20Image%202023-11-29%20at%2011-new.50.05.jpeg"
-              }
+              src={originalImage.url}
               alt="original photo"
             />
           }
           itemTwo={
             <ReactCompareSliderImage
-              src={
-                "https://replicate.delivery/pbxt/eRcy7w5wlJ3zPCejwNXYRarpuSFG6MIXwRpbFj4pXPNWxaHSA/out..jpeg"
-              }
+              src={restoredImage.url}
               alt="restored photo"
             />
           }
@@ -77,9 +72,7 @@ const Restore = () => {
             </h1>
             <img
               alt="original_photo"
-              src={
-                "https://upcdn.io/12a1xvS/thumbnail/uploads/2023/12/30/4kvZtyeY8o-WhatsApp%20Image%202023-11-29%20at%2011-new.50.05.jpeg"
-              }
+              src={originalImage.url}
               className="rounded mt-3"
               width={475}
               height={475}
@@ -91,9 +84,7 @@ const Restore = () => {
             </h1>
             <img
               alt="resored_photo"
-              src={
-                "https://replicate.delivery/pbxt/eRcy7w5wlJ3zPCejwNXYRarpuSFG6MIXwRpbFj4pXPNWxaHSA/out..jpeg"
-              }
+              src={restoredImage.url}
               className="rounded mt-3"
               width={475}
               height={475}
@@ -106,9 +97,8 @@ const Restore = () => {
 
   const renderMainBody = () => {
     if (
-      true ||
-      (originalImage.apiStatusConstants === apiStatusConstants.success &&
-        restoredImage.apiStatusConstants === apiStatusConstants.success)
+      originalImage.apiStatusConstants === apiStatusConstants.success &&
+      restoredImage.apiStatusConstants === apiStatusConstants.success
     ) {
       return (
         <div className="is-flex is-flex-direction-column is-align-items-center">
