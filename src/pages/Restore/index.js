@@ -10,6 +10,7 @@ import {
   ReactCompareSliderImage,
 } from "react-compare-slider";
 import { DNA } from "react-loader-spinner";
+import axios from "axios";
 
 const Restore = () => {
   const [originalImage, setOriginalImage] = useState({
@@ -27,18 +28,16 @@ const Restore = () => {
   const generatePhoto = async (oldPicUrl) => {
     setRestoredImage({ apiStatus: apiStatusConstants.inProgress, url: null });
     await new Promise((resolve) => setTimeout(resolve, 500));
-    const apiUrl = `${process.env.REACT_APP_BASE_URL}/restore`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ imgUrl: oldPicUrl }),
-      credentials: "include",
-    };
-    const res = await fetch(apiUrl, options);
-    if (res.ok) {
-      const newPhoto = res.json();
+    const apiUrl = `${process.env.REACT_APP_BASE_URL}/generate`;
+    const response = await axios.post(
+      apiUrl,
+      { imgUrl: oldPicUrl },
+      {
+        withCredentials: true,
+      }
+    );
+    if (response.status === 200) {
+      const newPhoto = response.data;
       setRestoredImage({
         apiStatus: apiStatusConstants.success,
         url: newPhoto,

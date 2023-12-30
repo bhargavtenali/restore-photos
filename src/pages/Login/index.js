@@ -5,6 +5,7 @@ import "bulma/css/bulma.min.css";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
 import modernWallpaper from "src/assets/bgLogin.jpg";
+import axios from "axios";
 
 const Login = () => {
   const [username, setUserName] = useState("");
@@ -35,17 +36,12 @@ const Login = () => {
     event.preventDefault();
     const userDetails = { username, password };
     const apiUrl = `${process.env.REACT_APP_BASE_URL}/login`;
-    const options = {
-      method: "POST",
-      body: JSON.stringify(userDetails),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await fetch(apiUrl, options);
-    if (response.ok === true) {
-      const data = await response.json();
-      Cookies.set("jwt_token", data.jwt_token, {
+    const response = await axios.post(apiUrl, userDetails, {
+      withCredentials: true,
+    });
+    if (response.status === 200) {
+      const data = response.data;
+      Cookies.set("jwt_token", data.username, {
         expires: 1 / 48,
       });
       history.replace("/");

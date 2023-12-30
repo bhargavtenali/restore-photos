@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="header-contianer mt-5">
+    <div className="header-contianer">
       <hr
         style={{
           color: "#E5E7EB",
@@ -11,7 +11,7 @@ const Footer = () => {
           margin: "0px",
         }}
       />
-      <div className="columns is-gapless px-3 py-3">
+      <div className="columns is-gapless px-3 py-5">
         <div className="column is-full is-half-desktop is-flex is-align-items-center is-size-6 has-text-black has-text-weight-medium footer-element-1">
           <p className="mr-1">Powered by </p>
           <a

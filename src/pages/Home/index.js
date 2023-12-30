@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div className="bg-container is-flex is-flex-direction-column is-align-items-center">
       <Header />
-      <div className="main-container is-flex is-flex-direction-column is-align-items-center is-flex-grow-1 has-text-centered px-5 mt-6 pt-6">
+      <div className="main-container is-flex is-flex-direction-column is-align-items-center is-flex-grow-1 has-text-centered px-5 my-6 py-6">
         <h1 className="is-size-2-touch is-size-1 has-text-weight-bold has-text-black">
           Restoring old photos using AI <br />
           <span className="has-text-info">built for everyone </span>
