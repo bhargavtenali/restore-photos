@@ -119,8 +119,6 @@ const Login = () => {
                 onChange={(e) => {
                   setUserName(e.target.value);
                 }}
-                whileHover={{ scale: 1.05 }}
-                whileFocus={{ borderColor: "#64ffda", scale: 1.05 }}
               />
             </div>
           </motion.div>
@@ -142,8 +140,6 @@ const Login = () => {
                   setPassword(e.target.value);
                 }}
                 placeholder="Your password"
-                whileHover={{ scale: 1.05 }}
-                whileFocus={{ borderColor: "#64ffda", scale: 1.05 }}
               />
             </div>
           </motion.div>
