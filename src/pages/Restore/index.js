@@ -208,7 +208,7 @@ const Restore = () => {
       <Header />
       <div
         style={{ width: "100%" }}
-        className="px-4 mt-4 mb-8 is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-flex-grow-1 has-text-centered"
+        className="mt-4 mb-6 pt-4 pb-6 is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-flex-grow-1 has-text-centered"
       >
         <h1 className="mb-5 is-size-1 has-text-weight-bold has-text-black">
           Restore any photo
