@@ -69,7 +69,7 @@ const Restore = () => {
       );
     } else {
       return (
-        <div className="columns is-variable is-3 mt-3">
+        <div className="columns is-variable is-7 mt-3">
           <div className="column is-12 is-6-desktop">
             <h1 className="is-size-6 has-text-black has-text-weight-semibold">
               Original Photo
