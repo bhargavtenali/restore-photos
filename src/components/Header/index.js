@@ -9,7 +9,7 @@ const Header = () => {
         <Link to="/" className="is-flex is-align-items-flex-end">
           <img className="header-logo" src={headerLogo} alt="header-logo" />
           <h1 className="ml-2 is-size-4-touch is-size-2 has-text-weight-bold has-text-black">
-            restorePhotos.io
+            Restore
           </h1>
         </Link>
         <a
