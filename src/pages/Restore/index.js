@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "src/components/Header";
 import Footer from "src/components/Footer";
 import { UploadDropzone } from "@bytescale/upload-widget-react";
+import { UrlBuilder } from "@bytescale/sdk";
 import { apiStatusConstants } from "src/constants";
 import Switch from "react-switch";
 import {
@@ -11,7 +12,7 @@ import {
 import { DNA } from "react-loader-spinner";
 
 const Restore = () => {
-  const [originalImage, setoriginalImage] = useState({
+  const [originalImage, setOriginalImage] = useState({
     apiStatus: apiStatusConstants.initial,
     url: null,
     error: null,
@@ -25,9 +26,13 @@ const Restore = () => {
 
   const generatePhoto = async (oldPicUrl) => {
     setRestoredImage({ apiStatus: apiStatusConstants.inProgress, url: null });
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const apiUrl = `${process.env.REACT_APP_BASE_URL}/restore`;
     const options = {
-      method: "GET",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ imgUrl: oldPicUrl }),
       credentials: "include",
     };
@@ -173,10 +178,19 @@ const Restore = () => {
             styles: { colors: { primary: "#AF52AE" } },
           }}
           onUpdate={({ uploadedFiles }) => {
-            setoriginalImage(
-              uploadedFiles[0].fileUrl.replace("raw", "thumbnail")
-            );
-            generatePhoto(uploadedFiles[0].fileUrl.replace("raw", "thumbnail"));
+            if (uploadedFiles.length !== 0) {
+              const image = uploadedFiles[0];
+              const imageUrl = UrlBuilder.url({
+                accountId: image.accountId,
+                filePath: image.filePath,
+                options: {
+                  transformation: "preset",
+                  transformationPreset: "thumbnail",
+                },
+              });
+              setOriginalImage(imageUrl);
+              generatePhoto(imageUrl);
+            }
           }}
           width="670px"
           height="250px"

@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "bulma/css/bulma.min.css";
 import Cookies from "js-cookie";
-
+import { useHistory } from "react-router-dom";
 import modernWallpaper from "src/assets/bgLogin.jpg";
 
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({ errorMsg: "", showSubmitError: false });
-
+  let history = useHistory();
   const fadeIn = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
@@ -45,9 +45,8 @@ const Login = () => {
     const response = await fetch(apiUrl, options);
     if (response.ok === true) {
       const data = await response.json();
-      const { history } = this.props;
       Cookies.set("jwt_token", data.jwt_token, {
-        expires: 1,
+        expires: 1 / 48,
       });
       history.replace("/");
     } else {

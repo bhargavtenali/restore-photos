@@ -12,9 +12,14 @@ const Header = () => {
             restorePhotos.io
           </h1>
         </Link>
-        <h1 className="header-text is-size-4-touch is-size-2 has-text-weight-bold">
+        <a
+          href="https://www.linkedin.com/in/bhargavtenali/"
+          target="_blank"
+          rel="noreferrer"
+          className="header-text is-size-4-touch is-size-2 has-text-weight-bold"
+        >
           Bhargav
-        </h1>
+        </a>
       </div>
       <hr
         style={{
