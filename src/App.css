@@ -1,6 +1,51 @@
 .bg-container {
+  width: 100%;
+  min-height: 100vh;
   background-color: #fcfbff;
 }
 .icon-color {
-  color: #705edc;
+  color: #334155;
+}
+.header-contianer {
+  width: 100%;
+}
+.header-logo {
+  width: 35px;
+}
+.main-container {
+  width: 100%;
+}
+.header-text {
+  background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.rounded {
+  border-radius: 20px;
+  overflow: hidden;
+}
+.footer-element-1 {
+  justify-content: center;
+}
+.footer-element-2 {
+  justify-content: center;
+  margin-top: 10px !important;
+}
+@media only screen and (min-width: 768px) {
+  .footer-element-1 {
+    justify-content: left;
+  }
+  .footer-element-2 {
+    justify-content: right;
+    margin-top: 0px !important;
+  }
+  .header-contianer {
+    width: 60%;
+  }
+  .header-logo {
+    width: 50px;
+  }
+  .main-container {
+    width: 40%;
+  }
 }
