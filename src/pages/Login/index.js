@@ -6,11 +6,15 @@ import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
 import modernWallpaper from "src/assets/bgLogin.jpg";
 import axios from "axios";
+import { apiStatusConstants } from "src/constants";
 
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState({ errorMsg: "", showSubmitError: false });
+  const [apiState, setApiState] = useState({
+    errorMsg: "",
+    apiStatus: apiStatusConstants.initial,
+  });
   let history = useHistory();
   const fadeIn = {
     hidden: { opacity: 0 },
@@ -36,18 +40,24 @@ const Login = () => {
     event.preventDefault();
     const userDetails = { username, password };
     const apiUrl = `${process.env.REACT_APP_BASE_URL}/login`;
+    setApiState({
+      errorMsg: "",
+      apiStatus: apiStatusConstants.inProgress,
+    });
     const response = await axios.post(apiUrl, userDetails, {
       withCredentials: true,
     });
     if (response.status === 200) {
       const data = response.data;
-      Cookies.set("jwt_token", data.username, {
-        expires: 1 / 48,
-      });
+      const jsonData = JSON.stringify({ username: data.username });
+      sessionStorage.setItem("username", jsonData);
       history.replace("/");
     } else {
       console.error(response);
-      setError({ errorMsg: "Error logging in", showSubmitError: true });
+      setApiState({
+        errorMsg: "Error logging in",
+        apiStatus: apiStatusConstants.failure,
+      });
     }
   };
   return (
@@ -148,15 +158,19 @@ const Login = () => {
             transition={{ duration: 0.6, delay: 1.2 }}
           >
             <motion.button
-              className="button is-primary is-rounded"
+              className={`button is-primary is-rounded ${
+                apiState.apiStatus === apiStatusConstants.inProgress
+                  ? "is-loading"
+                  : ""
+              }`}
               type="submit"
               variants={buttonVariant}
               whileHover="hover"
             >
               Login
             </motion.button>
-            {error.showSubmitError && (
-              <p className="error-message">*{error.errorMsg}</p>
+            {apiState.apiStatus === apiStatusConstants.failure && (
+              <p>*{apiState.errorMsg}</p>
             )}
           </motion.div>
         </form>
