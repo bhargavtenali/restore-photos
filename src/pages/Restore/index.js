@@ -11,6 +11,7 @@ import {
 } from "react-compare-slider";
 import { DNA } from "react-loader-spinner";
 import axios from "axios";
+import { saveAs } from "file-saver";
 
 const Restore = () => {
   const [originalImage, setOriginalImage] = useState({
@@ -133,6 +134,38 @@ const Restore = () => {
             </p>
           </div>
           {renderImageComparision()}
+          <div className="columns is-variable is-1 mt-1">
+            <div className="column is-12 is-6-desktop">
+              <button
+                onClick={() => {
+                  setOriginalImage({
+                    apiStatus: apiStatusConstants.initial,
+                    url: null,
+                    error: null,
+                  });
+                  setRestoredImage({
+                    apiStatus: apiStatusConstants.initial,
+                    url: null,
+                    error: null,
+                  });
+                }}
+                className="button is-rounded is-black has-text-weight-bold is-size-6 px-4 py-3"
+              >
+                Upload New Photo
+              </button>
+            </div>
+            <div className="column is-12 is-6-desktop">
+              <button
+                onClick={() => {
+                  const fileExtension = restoredImage.url.split(".").pop();
+                  saveAs(restoredImage.url, `restoredImage.${fileExtension}`);
+                }}
+                className="button is-rounded has-text-weight-bold is-size-6 px-4 py-3"
+              >
+                Download Restored Photo
+              </button>
+            </div>
+          </div>
         </div>
       );
     } else if (
@@ -146,9 +179,7 @@ const Restore = () => {
               <h1>Original Photo</h1>
               <img
                 alt="original_photo"
-                src={
-                  "https://upcdn.io/12a1xvS/thumbnail/uploads/2023/12/30/4kvZtyeY8o-WhatsApp%20Image%202023-11-29%20at%2011-new.50.05.jpeg"
-                }
+                src={originalImage.url}
                 className="rounded"
                 width={475}
                 height={475}
@@ -208,7 +239,7 @@ const Restore = () => {
       <Header />
       <div
         style={{ width: "100%" }}
-        className="mt-4 mb-6 pt-4 pb-6 is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-flex-grow-1 has-text-centered"
+        className="mt-4 mb-6 pt-4 pb-6 is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-flex-grow-1 has-text-centered px-4"
       >
         <h1 className="mb-5 is-size-1 has-text-weight-bold has-text-black">
           Restore any photo
