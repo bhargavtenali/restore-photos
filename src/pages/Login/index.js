@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "bulma/css/bulma.min.css";
-import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
 import modernWallpaper from "src/assets/bgLogin.jpg";
 import axios from "axios";
