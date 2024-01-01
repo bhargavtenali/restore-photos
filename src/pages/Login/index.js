@@ -78,9 +78,9 @@ const Login = () => {
         <motion.div
           style={{ width: "350px" }}
           className="notification is-info box"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.5 }}
         >
           <p>
             <strong>Test Login Information:</strong>
@@ -173,6 +173,36 @@ const Login = () => {
             )}
           </motion.div>
         </form>
+        {/* Text box with predefined username and password */}
+        <motion.div
+          style={{ width: "350px" }}
+          className="notification is-info box"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 2 }}
+        >
+          <p>
+            App built by Bhargav Tenali
+            <br />
+            To see my LinkedIn Profile{" "}
+            <a
+              href="https://www.linkedin.com/in/bhargavtenali/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Click Here
+            </a>
+            <br />
+            For Source Code{" "}
+            <a
+              href="https://github.com/bhargavtenali/restore-photos"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Click Here
+            </a>
+          </p>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
