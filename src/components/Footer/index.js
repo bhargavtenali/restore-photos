@@ -22,7 +22,7 @@ const Footer = () => {
           >
             Replicate{" "}
           </a>
-          <p className="mr-1">and</p>
+          {/* <p className="mr-1">and</p>
           <a
             href="https://www.linkedin.com/in/bhargavtenali/"
             target="_blank"
@@ -30,7 +30,7 @@ const Footer = () => {
             className="has-text-black has-text-weight-bold"
           >
             Bhargav
-          </a>
+          </a> */}
         </div>
         <div className="column column is-full is-half-desktop is-flex is-align-items-center footer-element-2">
           <a

@@ -30,7 +30,7 @@ const Home = () => {
         <div className="mt-6 is-flex is-justify-content-center">
           <a
             className="button rounded has-text-weight-bold is-size-6 px-4 py-3 mr-3"
-            href="https://www.linkedin.com/in/bhargavtenali/"
+            href="https://www.linkedin.com/posts/bhargavtenali_photorestoration-reactjs-nodejs-activity-7147484827410182144-lf_Q?utm_source=share&utm_medium=member_desktop"
             target="_blank"
             rel="noreferrer"
           >
