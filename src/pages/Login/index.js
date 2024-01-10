@@ -43,20 +43,27 @@ const Login = () => {
       errorMsg: "",
       apiStatus: apiStatusConstants.inProgress,
     });
-    const response = await axios.post(apiUrl, userDetails, {
-      withCredentials: true,
-    });
-    if (response.status === 200) {
+    try {
+      const response = await axios.post(apiUrl, userDetails, {
+        withCredentials: true,
+      });
       const data = response.data;
       const jsonData = JSON.stringify({ username: data.username });
       sessionStorage.setItem("username", jsonData);
       history.replace("/");
-    } else {
-      console.error(response);
-      setApiState({
-        errorMsg: "Error logging in",
-        apiStatus: apiStatusConstants.failure,
-      });
+    } catch (error) {
+      console.error(error);
+      if (!error?.response) {
+        setApiState({
+          errorMsg: "No Response from the server",
+          apiStatus: apiStatusConstants.failure,
+        });
+      } else {
+        setApiState({
+          errorMsg: `Error logging in due to ${error.response.data}`,
+          apiStatus: apiStatusConstants.failure,
+        });
+      }
     }
   };
   return (
@@ -168,10 +175,12 @@ const Login = () => {
             >
               Login
             </motion.button>
-            {apiState.apiStatus === apiStatusConstants.failure && (
-              <p>*{apiState.errorMsg}</p>
-            )}
           </motion.div>
+          {apiState.apiStatus === apiStatusConstants.failure && (
+            <p className="has-text-centered is-size-6 has-text-danger">
+              *{apiState.errorMsg}
+            </p>
+          )}
         </form>
         {/* Text box with predefined username and password */}
         <motion.div
