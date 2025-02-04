@@ -43,6 +43,12 @@ const Restore = () => {
         apiStatus: apiStatusConstants.success,
         url: newPhoto,
       });
+    } else if (response.status === 401) {
+      setRestoredImage({
+        apiStatus: apiStatusConstants.failure,
+        url: null,
+        error: "Token Expired",
+      });
     } else {
       setRestoredImage({ apiStatus: apiStatusConstants.failure, url: null });
     }
