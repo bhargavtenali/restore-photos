@@ -4,6 +4,7 @@ import Footer from "src/components/Footer";
 import { UploadDropzone } from "@bytescale/upload-widget-react";
 import { UrlBuilder } from "@bytescale/sdk";
 import { apiStatusConstants } from "src/constants";
+import { motion } from "framer-motion";
 import Switch from "react-switch";
 import {
   ReactCompareSlider,
@@ -30,27 +31,35 @@ const Restore = () => {
     setRestoredImage({ apiStatus: apiStatusConstants.inProgress, url: null });
     await new Promise((resolve) => setTimeout(resolve, 500));
     const apiUrl = `${process.env.REACT_APP_BASE_URL}/generate`;
-    const response = await axios.post(
-      apiUrl,
-      { imgUrl: oldPicUrl },
-      {
-        withCredentials: true,
+    try {
+      const response = await axios.post(
+        apiUrl,
+        { imgUrl: oldPicUrl },
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        const newPhoto = response.data;
+        setRestoredImage({
+          apiStatus: apiStatusConstants.success,
+          url: newPhoto,
+        });
+      } else if (response.status === 401) {
+        setRestoredImage({
+          apiStatus: apiStatusConstants.failure,
+          url: null,
+          error: "Token Expired",
+        });
+      } else {
+        setRestoredImage({ apiStatus: apiStatusConstants.failure, url: null });
       }
-    );
-    if (response.status === 200) {
-      const newPhoto = response.data;
-      setRestoredImage({
-        apiStatus: apiStatusConstants.success,
-        url: newPhoto,
-      });
-    } else if (response.status === 401) {
+    } catch (error) {
       setRestoredImage({
         apiStatus: apiStatusConstants.failure,
         url: null,
         error: "Token Expired",
       });
-    } else {
-      setRestoredImage({ apiStatus: apiStatusConstants.failure, url: null });
     }
   };
 
@@ -108,6 +117,39 @@ const Restore = () => {
 
   const renderMainBody = () => {
     if (
+      originalImage.apiStatus === apiStatusConstants.failure ||
+      restoredImage.apiStatus === apiStatusConstants.failure
+    ) {
+      return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="box p-6 has-text-centered shadow-lg rounded-lg bg-white"
+          >
+            <motion.div
+              initial={{ scale: 0.5 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="mb-4"
+            >
+              <i className="ri-time-line text-6xl has-text-danger"></i>
+            </motion.div>
+            <h1 className="title has-text-danger">Free Usage Limit Exceeded</h1>
+            <p className="subtitle has-text-grey mt-3">
+              You need to set up billing to run the image processing.
+            </p>
+            {/* <button
+              className="button is-danger mt-4"
+              onClick={() => navigate("/login")}
+            >
+              Go to Login
+            </button> */}
+          </motion.div>
+        </div>
+      );
+    } else if (
       originalImage.apiStatus === apiStatusConstants.success &&
       restoredImage.apiStatus === apiStatusConstants.success
     ) {
